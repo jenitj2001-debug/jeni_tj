@@ -1,0 +1,83 @@
+/* Basic reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+h2{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
+}
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #030202;
+  color: #000;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* Signup form container */
+.signup-container {
+  background-color: #000;
+  border:  3px solid white;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(254, 251, 251, 0.2);
+  width: 350px;
+
+}
+.signup-form h2 {
+  color: #fff;
+  margin-bottom: 20px;
+  text-align: center;  
+}
+/* Labels and Inputs */
+.signup-form label {
+  display: block;
+  color: #fff;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+.signup-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 2px solid #fff;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+/* Hover effect on input */
+.signup-form input:hover {
+  background-color: #fff;
+  color: #000;
+}
+/* Submit Button */
+.signup-form button {
+  width: 100%;
+  padding: 12px;
+  background-color: #fff;
+  color: #000;
+  border: none;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+/* Hover effect on button */
+.signup-form button:hover {
+  background-color: #000;
+  color: #fff;
+  border: 2px solid #fff;
+}
+.a{
+    font-size: 200px;
+    font-weight: bold;
+    color: white;
+    padding: 20px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;  
+}
+
+
