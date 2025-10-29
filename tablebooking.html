@@ -1,0 +1,141 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Booking</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: url(ai-generated-8223836_1920.jpg) no-repeat center center fixed;
+            background-size: cover;
+            text-align: center;
+            padding: 20px;
+            color: #fff;
+        }
+        .container {
+            max-width: 400px;
+            margin:inherit;
+            background: rgba(30, 20, 10, 0.9);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(255, 170, 0, 0.8);
+        }
+        input, button {
+            width:fit-content;
+            padding: 12px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        input {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffcc00;
+        }
+        .table-selection {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .table {
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+        .table.selected {
+            background: #ffcc00;
+            color: #000;
+            font-weight: bold;
+        }
+        button {
+            background: linear-gradient(45deg, #ff9900, #ff6600);
+            color: white;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+        button:hover {
+            background: linear-gradient(45deg, #ff6600, #cc5500);
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 170, 0, 0.9);
+        }
+        .booking-list {
+            margin-top: 20px;
+        }
+        .booking-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            margin: 5px 0;
+            border-radius: 5px;
+            font-size: 18px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Book a Table</h2>
+        <input type="text" id="name" placeholder="Your Name">
+        <input type="date" id="date">
+        <input type="time" id="time">
+        <div class="table-selection" id="tableSelection">
+            <div class="table" data-value="1">Table 1</div>
+            <div class="table" data-value="2">Table 2</div>
+            <div class="table" data-value="3">Table 3</div>
+            <div class="table" data-value="4">Table 4</div>
+            <div class="table" data-value="5">Table 5</div>
+            <div class="table" data-value="6">Table 6</div>
+            <div class="table" data-value="7">Table 7</div>
+            <div class="table" data-value="8">Table 8</div>
+        </div>
+        <input type="text" id="personCount" placeholder="Persons" readonly>
+        <button onclick="bookTable()">Book Now</button>
+        <h3>Current Bookings</h3>
+        <div class="booking-list" id="bookingList"></div>
+    </div><script>
+    document.querySelectorAll('.table').forEach(table => {
+        table.addEventListener('click', function() {
+            this.classList.toggle('selected');
+            updatePersonCount();
+        });
+    });
+
+    function updatePersonCount() {
+        let selectedTables = document.querySelectorAll('.table.selected');
+        let totalPersons = selectedTables.length * 8;
+        document.getElementById("personCount").value = totalPersons > 0 ? `${totalPersons} Persons` : "";
+    }
+
+    function bookTable() {
+        let name = document.getElementById("name").value;
+        let date = document.getElementById("date").value;
+        let time = document.getElementById("time").value;
+        let selectedTables = Array.from(document.querySelectorAll('.table.selected')).map(table => table.dataset.value);
+        let personCount = document.getElementById("personCount").value;
+        
+        if (name && date && time && selectedTables.length > 0) {
+            let bookingList = document.getElementById("bookingList");
+            let bookingItem = document.createElement("div");
+            bookingItem.className = "booking-item";
+            bookingItem.textContent = `Tables ${selectedTables.join(", ")}: ${name} - ${date} at ${time} for ${personCount}`;
+            bookingList.appendChild(bookingItem);
+            
+            document.getElementById("name").value = "";
+            document.getElementById("date").value = "";
+            document.getElementById("time").value = "";
+            document.querySelectorAll('.table.selected').forEach(table => table.classList.remove('selected'));
+            document.getElementById("personCount").value = "";
+        } else {
+            alert("Please fill in all details.");
+        }
+    }
+</script>
+
+</body>
+</html>

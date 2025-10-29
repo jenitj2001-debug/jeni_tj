@@ -1,0 +1,176 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Shop Order</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: url(coffee-3120750_1920.jpg);
+            background-size: cover;
+            color: white;
+            padding: 20px;
+        }
+        .order-container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+        .order-form {
+            display: none;
+            max-width: 550px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            background: #ffffff6c;
+            color: black;
+            box-shadow: 0 0 20px #000000ef;
+        }
+        button {
+            background: #d2691e;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: 0.4s;
+            box-shadow: 0 0 10px rgba(210, 105, 30, 0.7);
+        }
+        button:hover {
+            background: #ff8c00;
+            box-shadow: 0 0 20px rgba(255, 165, 0, 1);
+            transform: scale(1.05);
+        }
+           /* Glowing Input Fields */
+           input {
+            width: 90%;
+            padding: 8px;
+            margin: 10px 0;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            transition: 0.3s;
+            background: #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 255, 0.5);
+        }
+        input:focus {
+            border-color: #ff8c00;
+            box-shadow: 0 0 15px rgba(255, 140, 0, 1), 0 0 30px rgba(255, 165, 0, 0.7);
+        }
+        .product-selection {
+            display: flex;
+            flex-wrap:inherit;
+            justify-content: center;
+        }
+        .product-item {
+            text-align: center;
+            margin: 10px;
+            cursor: pointer;
+        }
+        .product-item img {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+            transition: 0.3s;
+        }
+        .product-item img:hover, .selected {
+            box-shadow: 0 0 15px rgba(255, 165, 0, 1);
+        }
+        .quantity-input {
+            display: none;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="order-container">
+        <h2>Welcome to BR Cafe</h2>
+        <button onclick="showOrderForm()">Order Online</button>
+    </div><div class="order-form" id="orderForm">
+    <h3>Place Your Order</h3>
+    <form id="orderDetails">
+        <label>Name:</label>
+        <input type="text" id="name" required><br>
+        <label>Phone Number:</label>
+        <input type="number" id="phone" required><br>
+        <label>Address:</label>
+        <input type="text" id="address" required><br>
+        <label>Select Products:</label>
+        <div class="product-selection" id="productSelection">
+            <div class="product-item" onclick="toggleProduct('Coffee', this)">
+                <img src="coffee-424763_1920.jpg" alt="Coffee"><br> Coffee
+                <input type="number" class="quantity-input" id="Coffee-qty" min="1" value="1">
+            </div>
+            <div class="product-item" onclick="toggleProduct('Burger', this)">
+                <img src="burger_frenchFries.png" alt="Burger"><br> Burger
+                <input type="number" class="quantity-input" id="Burger-qty" min="1" value="1">
+            </div>
+            <div class="product-item" onclick="toggleProduct('Cold Drinks', this)">
+                <img src="cold_beverages.png" alt="Cold Drinks"><br> Cold Drinks
+                <input type="number" class="quantity-input" id="Cold Drinks-qty" min="1" value="1">
+            </div>
+            <div class="product-item" onclick="toggleProduct('Dessert', this)">
+                <img src="dessert.png" alt="Dessert"><br> Dessert
+                <input type="number" class="quantity-input" id="Dessert-qty" min="1" value="1">
+            </div>
+            <div class="product-item" onclick="toggleProduct('Mocha', this)">
+                <img src="gallery_2.jpg" alt="Mocha"><br> Mocha
+                <input type="number" class="quantity-input" id="Mocha-qty" min="1" value="1">
+            </div>
+            <div class="product-item" onclick="toggleProduct('Tea', this)">
+                <img src="refreshment.png" alt="Tea"><br> Tea
+                <input type="number" class="quantity-input" id="Tea-qty" min="1" value="1">
+            </div>
+        </div>
+        <button type="button" onclick="submitOrder()">Submit Order</button>
+    </form>
+</div>
+
+<script>
+    let selectedProducts = {};
+
+    function showOrderForm() {
+        document.getElementById("orderForm").style.display = "block";
+    }
+
+    function toggleProduct(product, element) {
+        let quantityInput = document.getElementById(product + "-qty");
+        if (selectedProducts[product]) {
+            delete selectedProducts[product];
+            element.classList.remove("selected");
+            quantityInput.style.display = "none";
+        } else {
+            selectedProducts[product] = quantityInput.value;
+            element.classList.add("selected");
+            quantityInput.style.display = "block";
+        }
+    }
+
+    function submitOrder() {
+        let name = document.getElementById("name").value;
+        let phone = document.getElementById("phone").value;
+        let address = document.getElementById("address").value;
+        if (name && phone && address && Object.keys(selectedProducts).length > 0) {
+            let orderSummary = "Order Successfully Placed!\n" +
+                "Name: " + name + "\nPhone: " + phone + "\nAddress: " + address + "\nProducts:\n";
+            for (let product in selectedProducts) {
+                orderSummary += "- " + product + " (Quantity: " + selectedProducts[product] + ")\n";
+            }
+            alert(orderSummary);
+            document.getElementById("orderDetails").reset();
+            selectedProducts = {};
+            document.querySelectorAll(".selected").forEach(el => el.classList.remove("selected"));
+            document.querySelectorAll(".quantity-input").forEach(input => input.style.display = "none");
+        } else {
+            alert("Please fill all details!");
+        }
+    }
+</script>
+
+</body>
+</html>
